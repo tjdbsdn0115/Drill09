@@ -58,16 +58,13 @@ pico2d의 아래쪽 y=0을 기준으로 행은 다음과 같습니다.
 ## 개발 및 제출
 
 강의 예제를 바탕으로 AI 도움을 받아 구현했고, 기능별 실제 변경을 7개 커밋으로 기록했습니다.
-제출용 폴더에는 이 과제의 실제 커밋에서 파일을 골라 추출한 Git 이력이 포함되어 있습니다.
-파일만 새 저장소에 복사하면 커밋 이력이 전달되지 않습니다.
+기존 개발 커밋의 작성자·시각·메시지와 단계별 코드 변경을 보존하여 이 저장소에 병합했습니다.
+폴더 경로 변경으로 Git 커밋 해시는 원본과 다릅니다.
 
-GitHub에 이름이 `Drill09`인 빈 저장소를 만든 뒤 이 폴더에서 다음 명령을 실행합니다.
-새 GitHub 저장소 생성 시 README, .gitignore, License를 추가하지 않습니다.
+제출 주소: `https://github.com/tjdbsdn0115/Drill09.git`
+
+저장소 루트에서 실행할 때는 다음 명령을 사용합니다.
 
 ```powershell
-git remote add origin https://github.com/tjdbsdn0115/Drill09.git
-git push -u origin main
+python Labs/LEC10_HandlingInputs/animation_homework.py
 ```
-
-제출 주소는 `https://github.com/tjdbsdn0115/Drill09.git`입니다.
-이 주소는 저장소 생성과 푸시를 마친 뒤에 사용하세요.
