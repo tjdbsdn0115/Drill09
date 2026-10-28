@@ -1,0 +1,16 @@
+stateDiagram-v2
+    direction LR
+    state "AutoRun" as AUTORUN
+    [*] --> IDLE
+    IDLE --> RUN: LEFT / RIGHT DOWN
+    SLEEP --> RUN: LEFT / RIGHT DOWN
+    AUTORUN --> RUN: LEFT / RIGHT DOWN
+    RUN --> IDLE: All arrow keys UP
+    IDLE --> AUTORUN: A DOWN
+    AUTORUN --> IDLE: 5 seconds
+    IDLE --> SLEEP: 5 seconds in IDLE
+    SLEEP --> IDLE: SPACE DOWN
+    IDLE: Restart idle timer on entry
+    RUN: Manual movement, normal speed and size
+    AUTORUN: Invincible, speed x2, size x1.5
+    AUTORUN: Reverse direction at screen edges
