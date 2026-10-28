@@ -6,6 +6,7 @@ class AutoRun:
 
     NAME = 'AUTORUN'
     SPEED_MULTIPLIER = 2.0
+    SCALE = 1.5
 
     def __init__(self, boy):
         self.boy = boy
@@ -16,10 +17,16 @@ class AutoRun:
         self.started_at = monotonic()
         boy.last_update = self.started_at
         boy.frame = 0
+        boy.scale = self.SCALE
+        boy.invincible = True
         boy.pressed_keys.clear()
+        # The enlarged sprite must fit even when activated near an edge.
+        boy.clamp_to_screen()
 
     def exit(self):
-        pass
+        self.boy.scale = 1.0
+        self.boy.invincible = False
+        self.boy.clamp_to_screen()
 
     def update(self, now, elapsed):
         boy = self.boy
