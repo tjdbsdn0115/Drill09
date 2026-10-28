@@ -30,8 +30,24 @@ class AutoRun:
 
     def update(self, now, elapsed):
         boy = self.boy
-        boy.x += boy.direction * boy.RUN_SPEED * self.SPEED_MULTIPLIER * elapsed
-        boy.clamp_to_screen()
+        left, right = boy.horizontal_bounds()
+        if left == right:
+            boy.x = left
+        else:
+            boy.x += boy.direction * boy.RUN_SPEED * self.SPEED_MULTIPLIER * elapsed
+            # Reflect overshoot so even a long frame stays inside the screen.
+            while boy.x < left or boy.x > right:
+                if boy.x > right:
+                    boy.x = 2 * right - boy.x
+                    boy.direction = -1
+                elif boy.x < left:
+                    boy.x = 2 * left - boy.x
+                    boy.direction = 1
+            if boy.x >= right:
+                boy.direction = -1
+            elif boy.x <= left:
+                boy.direction = 1
+
         boy.frame = (boy.frame + boy.RUN_FPS * self.SPEED_MULTIPLIER * elapsed) % 8
 
     def draw(self):
