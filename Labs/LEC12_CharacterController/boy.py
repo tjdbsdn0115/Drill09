@@ -63,6 +63,12 @@ class Boy:
         self.last_update = monotonic()
 
     def handle_event(self, event):
+        if self.state == 'IDLE' and event.type == SDL_KEYDOWN and event.key == SDLK_a:
+            # Holding A must not start another five-second run after a timeout.
+            if not getattr(event, 'repeat', False):
+                self.start_auto_run()
+            return
+
         if self.state == 'SLEEP' and event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
             self.wake_up()
             return
