@@ -2,9 +2,10 @@ from time import monotonic
 
 
 class AutoRun:
-    """Automatic running state, developed in feature-sized steps."""
+    """Automatic, enlarged, invincible running for five seconds."""
 
     NAME = 'AUTORUN'
+    DURATION = 5.0
     SPEED_MULTIPLIER = 2.0
     SCALE = 1.5
 
@@ -30,6 +31,10 @@ class AutoRun:
 
     def update(self, now, elapsed):
         boy = self.boy
+        if now - self.started_at >= self.DURATION:
+            boy.finish_auto_run()
+            return
+
         left, right = boy.horizontal_bounds()
         if left == right:
             boy.x = left
