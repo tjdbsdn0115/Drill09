@@ -5,6 +5,7 @@ class AutoRun:
     """Automatic running state, developed in feature-sized steps."""
 
     NAME = 'AUTORUN'
+    SPEED_MULTIPLIER = 2.0
 
     def __init__(self, boy):
         self.boy = boy
@@ -21,7 +22,10 @@ class AutoRun:
         pass
 
     def update(self, now, elapsed):
-        pass
+        boy = self.boy
+        boy.x += boy.direction * boy.RUN_SPEED * self.SPEED_MULTIPLIER * elapsed
+        boy.clamp_to_screen()
+        boy.frame = (boy.frame + boy.RUN_FPS * self.SPEED_MULTIPLIER * elapsed) % 8
 
     def draw(self):
         self.boy.draw_running()
