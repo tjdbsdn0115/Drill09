@@ -1,4 +1,23 @@
-# Drill09 — 소년 상하좌우 이동 및 방향 바꾸기
+# Drill09 - AutoRun 캐릭터 컨트롤러
+
+이번 과제: [별도 AutoRun 상태 클래스와 실행 안내](Labs/LEC12_CharacterController/README.md)
+
+```powershell
+python -m pip install -r Labs/LEC12_CharacterController/requirements.txt
+python Labs/LEC12_CharacterController/main.py
+```
+
+IDLE에서 A를 누르면 5초간 속도 2배, 크기 1.5배의 자동 무적 런을 시작합니다.
+화면 양 끝에서 방향을 바꾸고, 방향키를 누르면 해당 방향의 일반 RUN으로 전환합니다.
+5초가 지나면 IDLE로 복귀하며 크기와 무적 여부를 복구합니다.
+
+![상태 다이어그램](Labs/LEC12_CharacterController/docs/state_diagram.png)
+
+[PNG 이미지](Labs/LEC12_CharacterController/docs/state_diagram.png) ·
+[SVG 원본](Labs/LEC12_CharacterController/docs/state_diagram.svg) ·
+[AutoRun 클래스](Labs/LEC12_CharacterController/auto_run.py)
+
+## 이전 과제 - 소년 상하좌우 이동 및 방향 바꾸기
 
 과제 파일: [animation_homework.py](Labs/LEC10_HandlingInputs/animation_homework.py)
 
