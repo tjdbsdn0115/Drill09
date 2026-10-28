@@ -37,7 +37,7 @@ class Boy:
                 'SLEEP',
             ],
             transitions=[
-                {'trigger': 'start_running', 'source': ['IDLE', 'SLEEP'], 'dest': 'RUN'},
+                {'trigger': 'start_running', 'source': ['IDLE', 'SLEEP', AutoRun.NAME], 'dest': 'RUN'},
                 {'trigger': 'stop_running', 'source': 'RUN', 'dest': 'IDLE'},
                 {'trigger': 'start_auto_run', 'source': 'IDLE', 'dest': AutoRun.NAME},
                 {'trigger': 'finish_auto_run', 'source': AutoRun.NAME, 'dest': 'IDLE'},
@@ -84,7 +84,7 @@ class Boy:
                 return
             self.pressed_keys.append(event.key)
             self.direction = 1 if event.key == SDLK_RIGHT else -1
-            if self.state in ('IDLE', 'SLEEP'):
+            if self.state in ('IDLE', 'SLEEP', AutoRun.NAME):
                 self.start_running()
         elif event.key in self.pressed_keys:
             self.pressed_keys.remove(event.key)
