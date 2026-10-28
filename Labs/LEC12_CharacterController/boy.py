@@ -6,6 +6,7 @@ from math import pi
 from pathlib import Path
 from transitions.extensions import GraphMachine
 from time import monotonic
+from auto_run import AutoRun
 
 class Boy:
     image = None
@@ -22,16 +23,24 @@ class Boy:
         self.direction = 1
         self.pressed_keys = []
         self.last_update = monotonic()
+        self.auto_run = AutoRun(self)
         self.machine = GraphMachine(
             model=self,
             states=[
                 {'name': 'IDLE', 'on_enter': 'start_idle_timer'},
                 {'name': 'RUN', 'on_enter': 'start_run'},
+                {
+                    'name': AutoRun.NAME,
+                    'on_enter': self.auto_run.enter,
+                    'on_exit': self.auto_run.exit,
+                },
                 'SLEEP',
             ],
             transitions=[
                 {'trigger': 'start_running', 'source': ['IDLE', 'SLEEP'], 'dest': 'RUN'},
                 {'trigger': 'stop_running', 'source': 'RUN', 'dest': 'IDLE'},
+                {'trigger': 'start_auto_run', 'source': 'IDLE', 'dest': AutoRun.NAME},
+                {'trigger': 'finish_auto_run', 'source': AutoRun.NAME, 'dest': 'IDLE'},
                 {'trigger': 'fall_asleep', 'source': 'IDLE', 'dest': 'SLEEP'},
                 {'trigger': 'wake_up', 'source': 'SLEEP', 'dest': 'IDLE'},
             ],
@@ -94,7 +103,9 @@ class Boy:
         elapsed = now - self.last_update
         self.last_update = now
 
-        if self.state == 'RUN':
+        if self.state == AutoRun.NAME:
+            self.auto_run.update(now, elapsed)
+        elif self.state == 'RUN':
             self.x += self.direction * self.RUN_SPEED * elapsed
             self.clamp_to_screen()
             self.frame = (self.frame + self.RUN_FPS * elapsed) % 8
@@ -109,6 +120,9 @@ class Boy:
         self.image.clip_draw(int(self.frame) * 100, row, 100, 100, self.x, draw_y, size, size)
 
     def draw(self):
+        if self.state == AutoRun.NAME:
+            self.auto_run.draw()
+            return
         if self.state == 'RUN':
             self.draw_running()
             return
